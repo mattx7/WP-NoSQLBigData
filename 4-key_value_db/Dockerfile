@@ -1,11 +1,12 @@
-FROM python:3
+FROM redis
 
 COPY src/* src/
 COPY requirements.txt requirements.txt
 
-RUN apt-get update && apt-get install -y redis-server
-RUN service redis-server start
+RUN apt-get update && apt-get install python3
 RUN pip install -r requirements.txt
+
+RUN redis-server &
 
 EXPOSE 6379:6379
 
