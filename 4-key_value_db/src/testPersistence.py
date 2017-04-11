@@ -1,3 +1,5 @@
+import re as regex
+
 import redis
 
 # https://pypi.python.org/pypi/redis
@@ -5,21 +7,22 @@ import redis
 db = redis.StrictRedis(host='localhost', port=6379, db=0)
 pipe = db.pipeline()
 
-d = {}
-# with open('resources/plz_mini.data', 'r') as f:
-#     for line in f:
-#        db.hmset("pythonDict", line)
 
-# with open('resources/plz_mini.data') as data_file:
-#     test_data = json.load(data_file)
-# db.set('test_json', test_data)
+def dict_from_string(str):
+    result = {}
+    for match in regex.findall('"([_0-9a-zA-Z]*)" : "([0-9a-zA-Z]*)"', str):
+        result[match[0]] = match[1]
+    return result
+
 
 # GET FROM FILE
-dicts_from_file = []
+dict_from_line = {}
 with open('resources/plz_mini.data', 'r') as inf:
     for line in inf:
-        dicts_from_file.append(eval(line))
+        dict_from_line = dict_from_string(line)
+        # SAVE IN REDIS
+        id = dict_from_line.pop("_id")
+        db.hmset(id, dict_from_line)
 
-# SAVE IN REDIS
-# with dicts_from_file as line:
-#     db.hmset('key',line)
+result = db.hgetall("01001")
+print(result)
