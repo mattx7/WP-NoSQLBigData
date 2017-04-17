@@ -7,7 +7,7 @@ REDIS = redis.StrictRedis(host='localhost', port=6379, db=0)
 REDIS_PIPE = REDIS.pipeline()
 
 # FILE
-FILE_PATH = 'resources/plz_mini.data'
+FILE_PATH = 'resources/plz.data'
 
 # PATTERN
 KEY_PATTERN = '"([_a-zA-Z]+)"'
@@ -18,7 +18,7 @@ def get_dictionary_from_string(string):
     """Returns a Map/Dictionary from a String with KEY VALUE pairs"""
     result = {}
     # Look for "<KEY>" : "<VALUE>"
-    for match in regex.findall(KEY_PATTERN + ' : "([ 0-9a-zA-Z]+)"', string):
+    for match in regex.findall(KEY_PATTERN + ' : "([\- 0-9a-zA-Z]+)"', string):
         result[match[0]] = match[1]
     # Look for "<KEY>" : <NUM_VALUE>
     for match in regex.findall(KEY_PATTERN + ' : ([.\-0-9]+)', string):
@@ -32,12 +32,11 @@ def get_dictionary_from_string(string):
 
 
 def save_file(file_path):
-    dict_from_line = {}
+    """Save all from file in redis database"""
     with open(file_path, 'r') as file:
         for line in file:
             # Convert line to Map/Dictionary
             dict_from_line = get_dictionary_from_string(line)
-
             # SAVE IN REDIS
             identifier = dict_from_line.pop('_id')
             state = dict_from_line.pop('state')
@@ -47,5 +46,4 @@ def save_file(file_path):
             REDIS.set(key + '#loc', dict_from_line['loc'])
 
 
-# GET FROM FILE
 save_file(FILE_PATH)
