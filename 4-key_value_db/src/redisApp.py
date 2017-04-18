@@ -12,52 +12,47 @@ REDIS_PIPE = REDIS.pipeline()
 
 VERBOSE = False
 
-result = REDIS.get('01001:MA:AGAWAM#loc')
-print(result)
 
-# print all keys
-for res in REDIS.keys('01001*'):
-    print(res)
+# result = REDIS.get('01001:MA:AGAWAM#loc')
+# print(result)
+#
+# # print all keys
+# for res in REDIS.keys('01001*'):
+#     print(res)
 
 
 def filterAndReturn(id, state, city, return_value):
-    """Filter by id, state and city. '' is possible. return_values could be all, id, state or city"""
+    """Filter by id, state and city. '' is possible. return_values could be id, state or city"""
     keys = REDIS.keys(id + '*:' + state + '*:*' + city + '*#*')
     result = set()
     for key in keys:
         tmp = regEx.search('(.*):(.*):(.*)#', str(key, 'utf-8'))
-        for return_value in return_values:
-            dict = {}
-            if return_value == 'all':
-                result.append({'id': tmp.group(1), 'state': tmp.group(2), 'city': tmp.group(3)})
-                break
-            elif return_value == 'id':
-                dict.update({'id': tmp.group(1)})
-            elif return_value == 'state':
-                dict.update({'state': tmp.group(2)})
-            elif return_value == 'city':
-                dict.update({'city': tmp.group(3)})
-            result.append(dict)
+        if return_value == 'id':
+            result.add(tmp.group(1))
+        elif return_value == 'state':
+            result.add(tmp.group(2))
+        elif return_value == 'city':
+            result.add(tmp.group(3))
     return result
 
 
-print('Result:')
-for result in filterAndReturn('', '', 'HAMBURG', 'id'):
-    print(result)
+# print('Result:')
+# for result in filterAndReturn('', '', 'HAMBURG', 'id'):
+#     print(result)
 
 
 def usage():
-    print("Usage:")
+    print("Usage: Filter with [-i,--id] [-s,--state] [-c,--city] and [-r,--return] could be 'id', 'state' or 'city' ")
 
 
 def main():
     id = ''
     state = ''
     city = ''
-    return_values = set()
+    return_value = 'id'
     # parse command line options
     try:
-        opts, args = getOpt.getopt(sys.argv[1:], "h", ["help"])
+        opts, args = getOpt.getopt(sys.argv[1:], "hi:s:c:r:", ["help", "id=", "state=", "city=", "return="])
     except getOpt.GetoptError as err:
         print(str(err))  # will print something like "option -a not recognized"
         usage()
@@ -73,13 +68,12 @@ def main():
             state = a
         elif o in ("-c", "--city"):
             city = a
+        elif o in ("-r", "--return"):
+            return_value = a
         else:
             assert False, "unhandled option"
-    if len(args) <= 1:
-        usage()
-        sys.exit(2)
-    else:
-        filterAndReturn(id, state, city, args)
+    for result in filterAndReturn(id, state, city, return_value):
+        print(result)
 
 
 if __name__ == "__main__":
