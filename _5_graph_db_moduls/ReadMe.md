@@ -1,9 +1,31 @@
-## HELP FROM http://www.apcjones.com/arrows/#
+# Modul-Graph with Neo4j
+HELP FROM http://www.apcjones.com/arrows/#
 
-Just Start Neo4j (neo4j start) and open Firefox on port 7474 localhost, then insert following code
+## Neo4j installation
 
-CREATE (`BWL1` :Fach {title: 'BWL1'}) ,  
-(`PM1` :Fach {title: 'PM1'} ) ,
+The Neo4j Debian repository can be used on Debian and Debian-based distributions like Ubuntu.
+
+Documentation for the Neo4j 3.0 (and above) Debian package is available here.
+
+To use the repository add it to the list of sources:
+
+`wget -O - https://debian.neo4j.org/neotechnology.gpg.key | sudo apt-key add -
+echo 'deb https://debian.neo4j.org/repo stable/' | sudo tee /etc/apt/sources.list.d/neo4j.list
+sudo apt-get update`
+
+
+## Insert Graph
+
+1. Start Neo4j with:
+
+    > neo4j start
+
+2. Open the address `localhost:7474` in browser.
+ 
+3. Insert following code in the Neo4j command line:
+
+    CREATE (`BWL1` :Fach {title: 'BWL1'}) ,  
+    (`PM1` :Fach {title: 'PM1'} ) ,
   (`GI` :Fach {title: 'GI'} ) ,
   (`MG` :Fach {title: 'MG'} ) ,
   (`RMP` :Fach {title: 'RMP'} ) ,

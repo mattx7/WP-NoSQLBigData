@@ -3,9 +3,9 @@ import sys
 
 sys.path.append("/home/lionpierau/projects/pycharm/NoSQL/")
 
-from key_value_db.src.data_access.Reader import Reader
-from key_value_db.src.data_access.Constants import Constants
-from key_value_db.src.data_access.Saver import Saver
+from _4_key_value_db.src.data_access.Reader import Reader
+from _4_key_value_db.src.data_access.Constants import Constants
+from _4_key_value_db.src.data_access.Saver import Saver
 
 
 class MainApp:

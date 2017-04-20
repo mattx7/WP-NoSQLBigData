@@ -1,6 +1,6 @@
 import re as regex
 
-from key_value_db.src.data_access.Constants import Constants
+from _4_key_value_db.src.data_access.Constants import Constants
 
 
 class Saver:
@@ -16,12 +16,19 @@ class Saver:
                 # Convert line to Map/Dictionary
                 dict_from_line = self.get_dictionary_from_string(line)
                 # SAVE IN REDIS
-                identifier = dict_from_line.pop('_id')
-                state = dict_from_line.pop('state')
-                city = dict_from_line.pop('city')
-                key = identifier + ':' + state + ':' + city
-                Constants.CONNECTION.set(key + '#pop', dict_from_line['pop'])
-                Constants.CONNECTION.set(key + '#loc', dict_from_line['loc'])
+                self.save(dict_from_line)
+
+    def save(self, dict):
+        # get key-values
+        identifier = dict.pop('_id')
+        state = dict.pop('state')
+        city = dict.pop('city')
+        # create key
+        key = identifier + ':' + state + ':' + city
+
+        # Add Values
+        Constants.CONNECTION.set(key + '#pop', dict['pop'])
+        Constants.CONNECTION.set(key + '#loc', dict['loc'])
 
     def get_dictionary_from_string(self, string):
         """Returns a Map/Dictionary from a String with KEY VALUE pairs"""
