@@ -12,22 +12,26 @@ class MainApp:
     """Holds the main-method for command line"""
 
     def __init__(self):
-        self.reader = Reader
-        self.saver = Saver
+        self.reader = Reader()
+        self.saver = Saver()
 
     def main(self):
         """Reads command line options"""
-        # TODO SAVER über commandprompt
+
         # Default values
         id = ''
         state = ''
         city = ''
         return_value = 'id'
+        file_to_save = 'plz.data'
+        save = False
+        read = False
 
         # parse command line options
         try:
             opts, args = getOpt.getopt(sys.argv[1:], "vhi:s:c:r:",
-                                       ["help", "verbose", "id=", "state=", "city=", "return="])
+                                       ["help", "verbose", "id=", "state=", "city=", "return=", "save=", "save",
+                                        "clear"])
         except getOpt.GetoptError as err:
             print(str(err))  # will print something like "option -a not recognized"
             self.usage()
@@ -47,21 +51,39 @@ class MainApp:
                 Constants.VERBOSE = True
             elif o in ("-i", "--id"):
                 id = a
+                read = True
             elif o in ("-s", "--state"):
                 state = a
+                read = True
             elif o in ("-c", "--city"):
                 city = a
+                read = True
             elif o in ("-r", "--return"):
                 return_value = a
+                read = True
+            elif o in "--save":
+                if a != '':
+                    file_to_save = a
+                save = True
+            elif o in "--clear":
+                self.saver.delete_all()
             else:
                 assert False, "unhandled option"
-        for result in self.reader.filter_and_return(id, state, city, return_value):
-            print(result)
+
+        if save:
+            count = self.saver.save_file_from_resource(file_to_save)
+            print(str(count) + ' pairs saved!')
+        if read:
+            for result in self.reader.filter_and_return(id, state, city, return_value):
+                print(result)
 
     @staticmethod
     def usage():
         print(
-            "Usage: Filter with [-i,--id] [-s,--state] [-c,--city] and [-r,--return] could be 'id', 'state' or 'city' ")
+            "Usage: \n"
+            "  - Saving:   Use --save <filename> to save a File from resource folder \n"
+            "  - Reading:  Use [-i, --id] [-s, --state] [-c, --city] and [-r, --return] <['id', 'state', 'city']> \n"
+            "  - Deleting: Use --clear to delete all from database")
 
 
 # Define main method

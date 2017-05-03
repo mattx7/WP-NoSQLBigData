@@ -12,7 +12,8 @@ class Constants:
     PIPE = CONNECTION.pipeline()
 
     # FILE
-    FILE_PATH = 'resources/plz.data'
+    FILE_PATH = '../../resources/plz.data'
+    RESOURCE_PATH = '../../resources/'
 
     # DEBUG
     VERBOSE = False
