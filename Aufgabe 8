@@ -27,6 +27,23 @@ db.fussball.insert({name: 'Leverkusen', gruendung: new Date(1904, 11, 20, 16, 15
 db.fussball.insert({name: 'Stuttgart', gruendung: new Date(1893, 9, 9 ), farben: ['rot', 'weiss'], Tabellenplatz: 7, nike: 'n'});
 db.fussball.insert({name: 'Werder', gruendung: new Date(1899,2,4), farben: ['gruen','weiss'], Tabellenplatz: 6, nike: 'j'});
 
-Find
-
+Findall
 db["fussball"].find();
+
+Find Augsburg
+db["fussball"].find({"name": "Augsburg"})
+
+Find with black color
+db["fussball"].find({"farben" :"schwarz"})
+
+Find where green and white
+db["fussball"].find({"farben" :["gruen","weiss"]})
+
+Find where green or white
+db["fussball"].find({"farben" : { $in: ["gruen","weiss"]}})
+
+highest tabellenplatz
+db.fussball.find().sort({"Tabellenplatz" :-1}).limit(1).pretty()
+
+nicht abstiegsgefährdet (unter tabellenplatz 17)
+db.fussball.find( { "Tabellenplatz" : { $lt: 17 } } );
