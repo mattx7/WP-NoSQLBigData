@@ -43,8 +43,6 @@ class Saver:
         # Look for "<KEY>" : [<NUM_VALUES, ... >]
         for match in regex.findall(self.keyPattern + ' : \[([.,\- 0-9]+)\]', string):
             result[match[0]] = [float(i) for i in (match[1].split(','))]
-
-            print(result)
         return result
 
     def delete_all(self):

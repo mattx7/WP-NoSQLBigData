@@ -1,5 +1,3 @@
-import re as regEx
-
 from _7_mongo_db.src.data_access.Constants import Constants
 
 
@@ -9,20 +7,31 @@ class Reader:
     def __init__(self):
         pass
 
-    def filter_and_return(self, id, state, city, return_value):
+    def find_and_select(self, zipcode, state, city, selected):
         """Filter by id, state and city. '' is possible. return_values could be id, state or city"""
 
-        keys = Constants.MONGO_CLIENT.keys(id + '*:' + state + '*:*' + city + '*#*')  # TODO
+        # build filter
+        search_for = {}
+        if zipcode != "":
+            search_for["_id"] = zipcode
+        if state != "":
+            search_for["state"] = state
+        if city != "":
+            search_for["city"] = city
+
+        # get documents
+        found_docs = []
         result = set()
-
-        for key in keys:
-            tmp = regEx.search('(.*):(.*):(.*)#', str(key, 'utf-8'))
-
-            if return_value == 'id':
-                result.add(tmp.group(1))
-            elif return_value == 'state':
-                result.add(tmp.group(2))
-            elif return_value == 'city':
-                result.add(tmp.group(3))
+        for post in Constants.COLLECTION.find(search_for):
+            found_docs.append(post)
+            if Constants.VERBOSE:
+                print("FOUND: " + str(post))
+            # select
+            if selected == 'zip':
+                result.add(post['_id'])
+            elif selected == 'state':
+                result.add(post['state'])
+            elif selected == 'city':
+                result.add(post['city'])
 
         return result

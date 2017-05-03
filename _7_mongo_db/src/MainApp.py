@@ -19,19 +19,18 @@ class MainApp:
         """Reads command line options"""
 
         # Default values
-        id = ''
+        zipcode = ''
         state = ''
         city = ''
-        return_value = 'id'
+        selected = 'zipcode'
         file_to_save = 'plz.data'
         save = False
         read = False
 
         # parse command line options
         try:
-            opts, args = getOpt.getopt(sys.argv[1:], "vhi:s:c:r:",
-                                       ["help", "verbose", "id=", "state=", "city=", "return=", "save=", "save",
-                                        "clear"])
+            opts, args = getOpt.getopt(sys.argv[1:], "vhz:s:c:", ["help", "verbose", "zip=", "state=", "city=",
+                                                                  "select=", "save=", "save", "clear"])
         except getOpt.GetoptError as err:
             print(str(err))  # will print something like "option -a not recognized"
             self.usage()
@@ -49,8 +48,8 @@ class MainApp:
                 sys.exit(0)
             elif o in ("-v", "--verbose"):
                 Constants.VERBOSE = True
-            elif o in ("-i", "--id"):
-                id = a
+            elif o in ("-z", "--zip"):
+                zipcode = a
                 read = True
             elif o in ("-s", "--state"):
                 state = a
@@ -58,13 +57,15 @@ class MainApp:
             elif o in ("-c", "--city"):
                 city = a
                 read = True
-            elif o in ("-r", "--return"):
-                return_value = a
+            elif o in "--select":
+                selected = a
                 read = True
             elif o in "--save":
                 if a != '':
                     file_to_save = a
                 save = True
+            elif o in "--clear":
+                self.saver.delete_all()
             else:
                 assert False, "unhandled option"
 
@@ -72,7 +73,7 @@ class MainApp:
             count = self.saver.save_file_from_resource(file_to_save)
             print(str(count) + ' documents saved!')
         if read:
-            for result in self.reader.filter_and_return(id, state, city, return_value):
+            for result in self.reader.find_and_select(zipcode, state, city, selected):
                 print(result)
 
     @staticmethod
@@ -80,7 +81,7 @@ class MainApp:
         print(
             "Usage: \n"
             "  - Saving:   Use --save <filename> to save a File from resource folder \n"
-            "  - Reading:  Use [-i, --id] [-s, --state] [-c, --city] and [-r, --return] <['id', 'state', 'city']> \n"
+            "  - Reading:  Use [-i, --id] [-s, --state] [-c, --city] and [-r, --select] <['id', 'state', 'city']> \n"
             "  - Deleting: Use --clear to delete all from database")
 
 
