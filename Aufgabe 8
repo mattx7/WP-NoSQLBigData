@@ -62,3 +62,17 @@ Der Komplette Datensatz von Augsburg ist nur noch " {Tabellenplatz :1} Name etc 
 Stellen sie den ursprünglichen Zustand von Augsburg (aus sinndeslebens.txt) wieder her.
 db.fussball.update({Tabellenplatz: 1},{name: 'Augsburg', gruendung: new Date(1907, 8, 8), farben: ['rot', 'weiss'], Tabellenplatz: 12,  nike: 'j'})
 
+e)
+Führen sie folgende Änderungsoperationen aus:
+
+1. Ändern sie den Tabellenplatz von Leverkusen auf 2
+db.fussball.findOneAndUpdate({"name": "Leverkusen"},{$set: {"Tabellenplatz": "2"}})
+
+2. Werder soll um einen Tabellenplatz nach vorne gebracht werden
+db.fussball.findOneAndUpdate({"name": "Werder"},{$inc: {"Tabellenplatz": -1}})
+
+3. Ergänzen sie für den HSV ein Attribut „abgestiegen“ mit einem sinnvollen Wert
+db.fussball.findOneAndUpdate({"name": "HSV"},{$set: {"abgestiegen": "1"}})
+
+4. Ergänzen sie für alle Vereine, deren Vereinsfarbe weiss enthält, ein Attribut „Waschtemperatur“ mit dem Wert 90.
+db.fussball.updateMany({"farben": "weiss"},{$set: {"Waschtemperatur": "90 Grad"}})
