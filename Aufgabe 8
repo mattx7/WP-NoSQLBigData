@@ -30,20 +30,35 @@ db.fussball.insert({name: 'Werder', gruendung: new Date(1899,2,4), farben: ['gru
 Findall
 db["fussball"].find();
 
-Find Augsburg
+1 Find Augsburg
 db["fussball"].find({"name": "Augsburg"})
 
-Find with black color
+2 Find with black color
 db["fussball"].find({"farben" :"schwarz"})
 
-Find where green and white
+3 Find where green and white
 db["fussball"].find({"farben" :["gruen","weiss"]})
 
-Find where green or white
+4 Find where green or white
 db["fussball"].find({"farben" : { $in: ["gruen","weiss"]}})
 
-highest tabellenplatz
+5 highest tabellenplatz
 db.fussball.find().sort({"Tabellenplatz" :-1}).limit(1).pretty()
 
-nicht abstiegsgefährdet (unter tabellenplatz 17)
+6 nicht abstiegsgefährdet (unter tabellenplatz 17)
 db.fussball.find( { "Tabellenplatz" : { $lt: 17 } } );
+
+c)
+beliebiges bei dem die id nicht angezeigt wird
+db.fussball.find({"name": "Augsburg"}, { _id: 0 })
+
+d) Führen sie folgende Änderungsoperation aus:
+db.fussball.update({name: 'Augsburg'}, {Tabellenplatz: 1})
+
+Was beobachten sie als Ergebnis? 
+Die Ausgabe: WriteResult({ "nMatched" : 1, "nUpserted" : 0, "nModified" : 1 })
+Der Komplette Datensatz von Augsburg ist nur noch " {Tabellenplatz :1} Name etc ist weg.
+
+Stellen sie den ursprünglichen Zustand von Augsburg (aus sinndeslebens.txt) wieder her.
+db.fussball.update({Tabellenplatz: 1},{name: 'Augsburg', gruendung: new Date(1907, 8, 8), farben: ['rot', 'weiss'], Tabellenplatz: 12,  nike: 'j'})
+
