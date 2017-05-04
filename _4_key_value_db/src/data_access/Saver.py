@@ -61,6 +61,5 @@ class Saver:
 
     def delete_all(self):
         """Clears the database"""
-
         Constants.CONNECTION.flushall()
         print('Database cleared!')

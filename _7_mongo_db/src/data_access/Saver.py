@@ -48,3 +48,4 @@ class Saver:
     def delete_all(self):
         """Clears the database"""
         Constants.MONGO_CLIENT.drop_database(Constants.MONGO_DB_NAME)
+        print('Database cleared!')
