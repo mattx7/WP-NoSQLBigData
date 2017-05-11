@@ -1,4 +1,4 @@
-from _7_mongo_db.src.data_access.Constants import Constants
+from _07_mongo_db.src.data_access.Constants import Constants
 
 
 class Reader:

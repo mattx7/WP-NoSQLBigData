@@ -1,11 +1,12 @@
 import getopt as getOpt
+import os
 import sys
 
-sys.path.append("/home/lionpierau/projects/pycharm/NoSQL/")
+sys.path.append(os.path.abspath("../.."))
 
-from _7_mongo_db.src.data_access.Reader import Reader
-from _7_mongo_db.src.data_access.Constants import Constants
-from _7_mongo_db.src.data_access.Saver import Saver
+from _07_mongo_db.src.data_access.Reader import Reader
+from _07_mongo_db.src.data_access.Constants import Constants
+from _07_mongo_db.src.data_access.Saver import Saver
 
 
 class MainApp:
