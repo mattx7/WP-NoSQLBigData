@@ -23,7 +23,7 @@ hbaseReader = HBReader()
 
 def runSaveClearTest(rounds):
     i = rounds
-    print("Start save-clear test for key-value...")
+    print("\nStart save-clear test for key-value...")
     keyStopwatch.start()
     while i > 0:
         i -= 1
@@ -32,7 +32,7 @@ def runSaveClearTest(rounds):
     display(rounds, keyStopwatch.stop())
 
     i = rounds
-    print("Start save-clear test for mongoDB...")
+    print("\nStart save-clear test for mongoDB...")
     keyStopwatch.start()
     while i > 0:
         i -= 1
@@ -40,13 +40,21 @@ def runSaveClearTest(rounds):
         mongoSaver.save_file("../resources/plz.data")
     display(rounds, keyStopwatch.stop())
 
+    i = rounds
+    print("\nStart save-clear test for hbase...")
+    keyStopwatch.start()
+    while i > 0:
+        i -= 1
+        hbaseSaver.delete_all()
+        hbaseSaver.save_file("../resources/plz.data")
+    display(rounds, keyStopwatch.stop())
 
 def runFindTestById(rounds):
     startZip = 10000
 
     i = rounds
     zip = startZip
-    print("Start find test by id  for key-value...")
+    print("\nStart find test by id  for key-value...")
     keyStopwatch.start()
     while i > 0:
         i -= 1
@@ -56,7 +64,7 @@ def runFindTestById(rounds):
 
     i = rounds
     zip = startZip
-    print("Start find test by id for mongoDB...")
+    print("\nStart find test by id for mongoDB...")
     keyStopwatch.start()
     while i > 0:
         i -= 1
@@ -64,10 +72,20 @@ def runFindTestById(rounds):
         mongoReader.find_and_select(str(zip), "", "", "")
     display(rounds, keyStopwatch.stop())
 
+    i = rounds
+    zip = startZip
+    print("\nStart find test by id for habse...")
+    keyStopwatch.start()
+    while i > 0:
+        i -= 1
+        zip += 1
+        hbaseReader.find_and_select(str(zip), "", "", "")
+    display(rounds, keyStopwatch.stop())
+
 
 def runFindTestByCity(rounds):
     i = rounds
-    print("Start find test by city for key-value...")
+    print("\nStart find test by city for key-value...")
     keyStopwatch.start()
     while i > 0:
         i -= 1
@@ -75,11 +93,19 @@ def runFindTestByCity(rounds):
     display(rounds, keyStopwatch.stop())
 
     i = rounds
-    print("Start find test by city for mongoDB...")
+    print("\nStart find test by city for mongoDB...")
     keyStopwatch.start()
     while i > 0:
         i -= 1
         mongoReader.find_and_select("", "", "HAMBURG", "")
+    display(rounds, keyStopwatch.stop())
+
+    i = rounds
+    print("\nStart find test by city for hbase...")
+    keyStopwatch.start()
+    while i > 0:
+        i -= 1
+        hbaseReader.find_and_select("", "", "HAMBURG", "")
     display(rounds, keyStopwatch.stop())
 
 

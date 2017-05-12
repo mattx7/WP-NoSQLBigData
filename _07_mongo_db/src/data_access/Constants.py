@@ -10,7 +10,7 @@ class Constants:
     # MONGO-DB
     MONGO_DB_NAME = 'database'
     MONGO_COLLECTION_NAME = 'collection'
-    MONGO_CLIENT = MongoClient()
+    MONGO_CLIENT = MongoClient(port=26016)
     DB = MONGO_CLIENT[MONGO_DB_NAME]
     COLLECTION = DB[MONGO_COLLECTION_NAME]
 
