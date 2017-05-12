@@ -11,7 +11,6 @@ class Reader:
         """Filter by id, state and city. '' is possible. return_values could be id, state or city"""
 
         found_values = []
-        Constants.CONNECTION.open()
         if zipcode != "":
             for key, data in Constants.TABLE.scan(row_prefix=bytes(zipcode)):
                 found_values.append(data)
@@ -35,5 +34,4 @@ class Reader:
             elif selected == 'city':
                 result.add(key_value['family:city'])
 
-        Constants.CONNECTION.close()
         return result

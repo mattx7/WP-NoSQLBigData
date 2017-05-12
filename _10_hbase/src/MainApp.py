@@ -69,7 +69,7 @@ class MainApp:
 
         if save:
             count = self.saver.save_file_from_resource(file_to_save)
-            print(str(count) + ' values saved!')
+            print(str(count) + ' rows saved!')
         if read:
             for result in self.reader.find_and_select(zipcode, state, city, selected):
                 print(result)

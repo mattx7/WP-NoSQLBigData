@@ -8,7 +8,7 @@ class Constants:
         pass
 
     # HBASE
-    CONNECTION = happybase.Connection('localhost', autoconnect=False)
+    CONNECTION = happybase.Connection('localhost', autoconnect=True)
     TABLE_NAME = 'plz'
     TABLE = CONNECTION.table(TABLE_NAME)
     # FILE

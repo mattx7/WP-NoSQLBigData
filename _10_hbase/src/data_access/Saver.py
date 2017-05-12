@@ -18,7 +18,6 @@ class Saver:
         count = 0
         is_table_created = False
 
-        Constants.CONNECTION.open()
         with open(file_path, 'r') as a_file:
             for line in a_file:
 
@@ -34,7 +33,6 @@ class Saver:
                 self.__save(key, dict_from_line)
                 count += 1
 
-        Constants.CONNECTION.close()
         return count
 
     def __save(self, row, key_value):
@@ -82,8 +80,6 @@ class Saver:
 
     def delete_all(self):
         """Clears the database"""
-        Constants.CONNECTION.open()
         Constants.CONNECTION.disable_table(Constants.TABLE_NAME)
         Constants.CONNECTION.delete_table(Constants.TABLE_NAME)
-        Constants.CONNECTION.close()
         print('Database deleted!')
