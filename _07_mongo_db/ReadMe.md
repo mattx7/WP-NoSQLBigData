@@ -1,29 +1,48 @@
-# HowTo
- 1. Install PyMongo [[Ref.]](https://docs.mongodb.com/ecosystem/drivers/python/)
+# Document-oriented database ([MondoDB](https://www.mongodb.com/))
 
-    > sudo python -m pip install pymongo
+## Configure application environment
 
- 2. Start with: [[Ref.]](http://stackoverflow.com/questions/7744147/pymongo-keeps-refusing-the-connection-at-27017)
+* ([Install Docker](https://docs.docker.com/engine/installation/) for your OS.)
 
-    > sudo service mongod start
-        
- - MongoDB-Shell [[Ref.]](https://docs.mongodb.com/manual/mongo/#introduction)
+* (Install python3.)
+
+* Install mongo client for python with `sudo python3 -m pip install pymongo`
+
+* Start redis container with `docker run --name some-mongo -d mongo`.
+    * (Or `docker start some-mongo` if already in local repository )
+
+* Use `docker inspect some-mongo | grep IPAddress` to get the IP from the container.
+
+* Change the var HOST in the MongoConstants.py file to the IP of the container.
+
+## Usage
+
+ - Saving:   `python3 MainApp.py --save` to save `plz.data` or `--save <filename>`
+ - Reading:  `python3 MainApp.py [--zip, --state, --city] --select ['zip', 'state', 'city']`
+ - Deleting: `python3 MainApp.py --clear` to delete all from database
+
+
+## Troubleshooting
+
+* `docker attach some-mongo` to get into the container. 
+    * (`docker exec -i -t loving_heisenberg /bin/bash` for multiple shell instances.)
+
+
+* MongoDB-Shell [[Ref.]](https://docs.mongodb.com/manual/mongo/#introduction)
  
-    * Access with
-        > mongo --shell
-    * Display database you are using
-        > db
-    * Switch database
-        > use \<database\>
-    * Insert
-        > use myNewDatabase 
-        
-        > db.myCollection.insertOne( { x: 1 } );
-    * Find
-        > db["3test"].find()
-        > db.getCollection("3test").find()
+    * Access with `mongo --shell`
+    * Display database you are using `db`
+    * Switch database `use <database>`
+    * Insert: 
+        * `use myNewDatabase`
+        * `db.myCollection.insertOne( { x: 1 } );`
+    * Find:
+        * `db["3test"].find()` 
+        * `db.getCollection("3test").find()`
        
- - Other useful commands:
+* Other useful commands:
+    * `sudo mongod --repair`
+    * `sudo service mongodb status`
+
+        
  
-    * sudo mongod --repair
-    * sudo service mongodb status

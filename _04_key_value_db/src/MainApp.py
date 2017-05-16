@@ -76,7 +76,7 @@ def usage():
     print(
         "Usage: \n"
         "  - Saving:   Use --save <filename> to save a File from resource folder \n"
-        "  - Reading:  Use [-i, --id] [-s, --state] [-c, --city] and --select ['id', 'state', 'city'] \n"
+        "  - Reading:  Use [--zip, --state, --city] and --select ['zip', 'state', 'city'] \n"
         "  - Deleting: Use --clear to delete all from database")
 
 

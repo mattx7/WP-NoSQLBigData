@@ -1,25 +1,25 @@
-# Key-Value Database with Redis
+# Key-Value Database ([Redis](https://redis.io/))
 
-## How to run the application
+## Configure application environment
 
 * ([Install Docker](https://docs.docker.com/engine/installation/) for your OS.)
 
-* (Install python.)
+* (Install python3.)
 
-* Install redis client for python with `sudo pip install redis`
+* Install redis client for python with `sudo python3 -m pip install redis`
 
 * Start redis container with `docker run --name some-redis -d redis`.
+    * (Or `docker start some-redis` if already in local repository )
 
-* Get the container-id with `docker ps`.
+* Use `docker inspect some-redis | grep IPAddress` to get the IP from the container.
 
-* Use `docker inspect <container-id>` to get the IP from the redis container.
-
-* Change the var HOST in the RedisConstants.py file to the IP of the redis container.
+* Change the var HOST in the RedisConstants.py file to the IP of the container.
 
 ## Usage
- - Saving:   Use `--save <filename>` to save a File from resource folder 
- - Reading:  Use `[--id, --state, --city] --select ['id', 'state', 'city']`
- - Deleting: Use `--clear` to delete all from database
+
+ - Saving:   `python3 MainApp.py --save` to save `plz.data` or `--save <filename>`
+ - Reading:  `python3 MainApp.py [--zip, --state, --city] --select ['zip', 'state', 'city']`
+ - Deleting: `python3 MainApp.py --clear` to delete all from database
         
 ## Key-value structure
 

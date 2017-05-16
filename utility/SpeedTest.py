@@ -1,8 +1,8 @@
 from _04_key_value_db.src.data_access.Reader import Reader as KReader
-
-from _04_key_value_db.src.RedisSaver import Saver as KSaver
-from _07_mongo_db.src.data_access.Reader import Reader as MReader
 from _07_mongo_db.src.data_access.Saver import Saver as MSaver
+
+from MongoReader import Reader as MReader
+from _04_key_value_db.src.RedisSaver import Saver as KSaver
 from _10_hbase.src.data_access.Reader import Reader as HBReader
 from _10_hbase.src.data_access.Saver import Saver as HBSaver
 from utility.Stopwatch import Stopwatch
