@@ -25,7 +25,7 @@
 ## Troubleshooting
 
 * `docker attach some-mongo` to get into the container. 
-    * (`docker exec -i -t loving_heisenberg /bin/bash` for multiple shell instances.)
+    * (`docker exec -i -t some-mongo /bin/bash` for multiple shell instances.)
 
 
 * MongoDB-Shell [[Ref.]](https://docs.mongodb.com/manual/mongo/#introduction)

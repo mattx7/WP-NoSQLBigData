@@ -1,4 +1,4 @@
-from _10_hbase.src.data_access.Constants import Constants
+import HBaseConstants as Constants
 
 for key, data in Constants.TABLE.scan(filter="SingleColumnValueFilter('family', 'city', =, 'regexstring:^HAMBURG$')"):
     print(str(key) + " -> " + str(data))
