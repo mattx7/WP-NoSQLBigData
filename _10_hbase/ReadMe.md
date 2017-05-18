@@ -14,7 +14,7 @@
 
 * Get container id with `docker ps`
 
-* Start Thrift with `docker exec -d <containerID> hbase thrift start`
+* Start Thrift with `docker exec -d some-hbase hbase thrift start`
 
 * Use `docker inspect some-hbase | grep IPAddress` to get the IP from the container.
 

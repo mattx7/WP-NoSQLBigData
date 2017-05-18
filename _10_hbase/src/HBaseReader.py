@@ -6,7 +6,7 @@ def find_and_select(zipcode, state, city, selected):
 
     found_values = []
     if zipcode != "":
-        for key, data in Constants.TABLE.scan(row_prefix=bytes(zipcode)):
+        for key, data in Constants.TABLE.scan(row_prefix=bytes(zipcode, 'utf8')):
             found_values.append(data)
     else:
         col = ("state" if state != "" else "city")
