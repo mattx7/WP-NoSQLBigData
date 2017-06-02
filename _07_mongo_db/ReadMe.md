@@ -8,7 +8,7 @@
 
 * Install mongo client for python with `sudo python3 -m pip install pymongo`
 
-* Start redis container with `docker run --name some-mongo -d mongo`.
+* Start mongo container with `docker run --name some-mongo -d mongo`.
     * (Or `docker start some-mongo` if already in local repository )
 
 * Use `docker inspect some-mongo | grep IPAddress` to get the IP from the container.
